@@ -177,5 +177,3 @@ El proyecto utiliza un entorno virtual Python dentro del contenedor Docker para 
 
 - Asegúrate de que los archivos `requirements.txt`, `nginx.conf` y `docker-entrypoint.sh` estén en el directorio raíz del proyecto.
 - Modifica las configuraciones según sea necesario para tu entorno de desarrollo.
-
-¡Y eso es todo! Ahora tienes un entorno Django 4.2 completamente funcional usando Docker, con soporte para desarrollo con recarga automática.

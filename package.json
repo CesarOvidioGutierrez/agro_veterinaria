@@ -1,0 +1,17 @@
+{
+  "name": "agro-veterinaria",
+  "version": "1.0.0",
+  "description": "Aplicación web para Agro Veterinaria",
+  "scripts": {
+    "build": "tailwindcss -i ./static/css/input.css -o ./static/css/output.css",
+    "watch": "tailwindcss -i ./static/css/input.css -o ./static/css/output.css --watch"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.14",
+    "postcss": "^8.4.21",
+    "tailwindcss": "^3.3.0"
+  },
+  "dependencies": {
+    "flowbite": "^3.1.2"
+  }
+}
