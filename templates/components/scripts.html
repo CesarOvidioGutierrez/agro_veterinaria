@@ -1,0 +1,32 @@
+{% load static %}
+<script>
+    // Mobile menu toggle
+    document.addEventListener('DOMContentLoaded', function() {
+        const menuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        if (menuButton && mobileMenu) {
+            menuButton.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+
+        // Alert dismissal
+        const closeButtons = document.querySelectorAll('[data-dismiss-target]');
+        closeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const alert = button.closest('[role="alert"]');
+                if (alert) {
+                    alert.remove();
+                }
+            });
+        });
+    });
+</script>
+
+
+{% block extra_scripts %}
+    <script src="{% static 'flowbite/dist/flowbite.min.js' %}"></script>
+    <script src="https://unpkg.com/@flowbite/icons"></script>
+
+{% endblock %} 
