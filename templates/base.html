@@ -1,0 +1,54 @@
+{% load static %}
+{% load tailwind_tags %}
+{% load compress %}
+<!DOCTYPE html>
+<html lang="{% block html_lang %}es{% endblock %}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Agro Veterinaria{% endblock %}</title>
+
+    {% block meta_tags %}
+    <meta name="description" content="{% block meta_description %}Tienda especializada en productos veterinarios y agrícolas{% endblock %}">
+    <meta name="keywords" content="{% block meta_keywords %}veterinaria, agricultura, productos, animales{% endblock %}">
+    {% endblock %}
+
+    {% tailwind_css %} {# Tailwind generado por django-tailwind #}
+
+    {% block extra_css %}
+    
+    <!-- Flowbite CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
+    {% endblock %}
+    {% block extra_head %}{% endblock %}
+
+
+</head>
+<body class="{% block body_class %}bg-gray-50 flex flex-col min-h-screen{% endblock %}">
+
+    {% block header %}
+        {% include "components/header.html" %}
+    {% endblock %}
+
+    {% block messages %}
+        {% include "components/messages.html" %}
+    {% endblock %}
+
+    <div class="sm:ml-64">
+        <main class="{% block main_class %}container mx-auto px-4 py-8 flex-grow{% endblock %}">
+            <div class="p-4 ">
+                {% block content %}{% endblock %}
+            </div>
+        </main>
+        {% block footer %}
+            {% include "components/footer.html" %}
+        {% endblock %}
+    </div>
+
+
+    {% block base_js %}
+    {% include "components/scripts.html" %}
+    {% endblock %}
+
+</body>
+</html>
