@@ -1,0 +1,33 @@
+{% if is_paginated %}
+<nav class="flex items-center flex-column flex-wrap md:flex-row justify-between pt-4 bg-white dark:bg-gray-800 p-4" aria-label="Table navigation">
+    <span class="text-sm font-normal text-gray-500 dark:text-gray-400 mb-4 md:mb-0 block w-full md:inline md:w-auto">
+        Mostrando <span class="font-semibold text-gray-900 dark:text-white">{{ page_obj.start_index }}-{{ page_obj.end_index }}</span> 
+        de <span class="font-semibold text-gray-900 dark:text-white">{{ paginator.count }}</span>
+    </span>
+    <ul class="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
+        {% if page_obj.has_previous %}
+        <li>
+            <a href="?page={{ page_obj.previous_page_number }}" class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Anterior</a>
+        </li>
+        {% endif %}
+        
+        {% for i in paginator.page_range %}
+            {% if page_obj.number == i %}
+                <li>
+                    <a aria-current="page" class="flex items-center justify-center px-3 h-8 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">{{ i }}</a>
+                </li>
+            {% else %}
+                <li>
+                    <a href="?page={{ i }}" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ i }}</a>
+                </li>
+            {% endif %}
+        {% endfor %}
+        
+        {% if page_obj.has_next %}
+        <li>
+            <a href="?page={{ page_obj.next_page_number }}" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Siguiente</a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %} 

@@ -3,3 +3,5 @@ psycopg2-binary
 gunicorn
 django-tailwind==3.6.0
 django-compressor
+Pillow
+django-widget-tweaks

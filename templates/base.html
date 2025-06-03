@@ -2,7 +2,7 @@
 {% load tailwind_tags %}
 {% load compress %}
 <!DOCTYPE html>
-<html lang="{% block html_lang %}es{% endblock %}">
+<html lang="{% block html_lang %}es{% endblock %}" class="h-full">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,25 +24,27 @@
 
 
 </head>
-<body class="{% block body_class %}bg-gray-50 flex flex-col min-h-screen{% endblock %}">
+<body class="{% block body_class %}bg-gray-50 flex flex-col min-h-screen h-full{% endblock %}">
 
     {% block header %}
         {% include "components/header.html" %}
     {% endblock %}
 
-    {% block messages %}
-        {% include "components/messages.html" %}
-    {% endblock %}
 
-    <div class="sm:ml-64">
-        <main class="{% block main_class %}container mx-auto px-4 py-8 flex-grow{% endblock %}">
-            <div class="p-4 ">
+    <div class="sm:ml-64 mt-32 flex flex-col flex-grow min-h-[calc(100vh-32px)]">
+        <main class="{% block main_class %}container mx-auto px-4 pt-8 pb-4 flex-grow{% endblock %}">
+            <div class="px-4 pt-20 mt-18 flex-grow">
+                {% block messages %}
+                    {% include "components/messages.html" %}
+                {% endblock %}
                 {% block content %}{% endblock %}
             </div>
         </main>
-        {% block footer %}
-            {% include "components/footer.html" %}
-        {% endblock %}
+        <div class="mt-auto">
+            {% block footer %}
+                {% include "components/footer.html" %}
+            {% endblock %}
+        </div>
     </div>
 
 

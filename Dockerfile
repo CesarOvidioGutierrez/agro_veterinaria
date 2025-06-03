@@ -21,6 +21,12 @@ ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 # Set work directory
 WORKDIR /app
 
+# Aseguramos permisos correctos
+RUN chmod -R 777 /app
+
+# Forzamos umask para lo que se cree
+RUN umask 000
+
 COPY requirements.txt .
 
 # Instalar dependencias en el entorno virtual
