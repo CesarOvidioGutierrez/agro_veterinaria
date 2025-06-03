@@ -21,6 +21,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('veterinaria.urls')),
+    path('producto/', include('producto.urls')),
 ]
 
 # Agregar URLs para servir archivos estáticos y de medios en desarrollo

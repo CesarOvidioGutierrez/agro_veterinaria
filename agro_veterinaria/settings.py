@@ -44,7 +44,9 @@ INSTALLED_APPS = [
     'tailwind',
     'theme',  # App para Tailwind
     'veterinaria',
+    'producto',
     'compressor',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
