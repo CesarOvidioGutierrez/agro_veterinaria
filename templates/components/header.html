@@ -1,4 +1,5 @@
 {% load static %}
+{% load utils_tags %}
 <header class="animate-fade-in">
     <nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
         <div class="px-3 py-3 lg:px-5 lg:pl-3">
@@ -15,6 +16,14 @@
                 <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Agro Veterinaria</span>
               </a>
             </div>
+
+            <!-- Breadcrumbs - centrado en la barra de navegación -->
+            <div class="hidden md:flex items-center justify-center flex-1">
+              {% with items=breadcrumbs_items %}
+                {% breadcrumbs items %}
+              {% endwith %}
+            </div>
+            
             <div class="flex items-center">
                 <div class="flex items-center ms-3">
                   <div>
@@ -53,7 +62,14 @@
         </div>
       </nav>
       
-      <aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700" aria-label="Sidebar">
+      <!-- Breadcrumbs para móviles - debajo de la barra de navegación -->
+      <div class="fixed top-14 left-0 z-30 w-full px-4 py-2 bg-gray-50 border-b border-gray-200 md:hidden sm:px-6 dark:bg-gray-700 dark:border-gray-600">
+        {% with items=breadcrumbs_items %}
+          {% breadcrumbs items %}
+        {% endwith %}
+      </div>
+      
+      <aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen pt-16 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700" aria-label="Sidebar">
          <div class="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
             <ul class="space-y-2 font-medium">
                 <li>
@@ -96,4 +112,10 @@
             </ul>
         </div>
       </aside>      
-</header> 
+</header>
+
+<script>
+  // Definir valores predeterminados para breadcrumbs
+  var default_items = [{'title': 'Inicio', 'url': '/'}];
+  var default_breadcrumbs_items = default_items;
+</script> 

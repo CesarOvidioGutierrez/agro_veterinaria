@@ -2,34 +2,49 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import Product, Category, Brand, Supplier
 from .forms import ProductForm, CategoryForm, BrandForm, SupplierForm
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.views.generic import ListView
+from django.urls import reverse
 
-# Products - Productos
-def product_list(request):
-    products_list = Product.objects.all()
-    
-    # Paginación: 10 productos por página
-    paginator = Paginator(products_list, 10)
-    page = request.GET.get('page')
-    
-    try:
-        products = paginator.page(page)
-    except PageNotAnInteger:
-        # Si la página no es un entero, mostrar la primera página
-        products = paginator.page(1)
-    except EmptyPage:
-        # Si la página está fuera de rango, mostrar la última página
-        products = paginator.page(paginator.num_pages)
-    
-    # Contexto con las variables necesarias para la paginación
-    context = {
-        'products': products,
-        'paginator': paginator,
-        'page_obj': products,
-        'is_paginated': paginator.num_pages > 1
-    }
-    
-    return render(request, 'product_list.html', context)
+class ProductListView(ListView):
+    model = Product
+    template_name = 'product_list.html'
+    context_object_name = 'object_list'
+    paginate_by = 10
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        
+        # Filtrar por categoría si se proporciona en la URL
+        categoria_id = self.request.GET.get('categoria')
+        if categoria_id:
+            queryset = queryset.filter(category_id=categoria_id)
+        
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        # Obtener categoría actual si está filtrada
+        categoria_id = self.request.GET.get('categoria')
+        if categoria_id:
+            context['current_category'] = Category.objects.filter(id=categoria_id).first()
+        
+        # Crear migas de pan (breadcrumbs)
+        breadcrumbs_items = [
+            {'title': 'Inicio', 'url': '/'},
+            {'title': 'Productos', 'url': None}
+        ]
+        
+        # Agregar categoría a las migas de pan si está filtrada
+        if categoria_id and 'current_category' in context and context['current_category']:
+            breadcrumbs_items = [
+                {'title': 'Inicio', 'url': '/'},
+                {'title': 'Productos', 'url': reverse('producto:product_list')},
+                {'title': context['current_category'].name, 'url': None}
+            ]
+        
+        context['breadcrumbs_items'] = breadcrumbs_items
+        return context
 
 def product_detail(request, pk):
     product = Product.objects.get(pk=pk)
