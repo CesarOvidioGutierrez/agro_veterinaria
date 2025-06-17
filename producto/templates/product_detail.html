@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ product.name }} - Agro Veterinaria{% endblock %}
+
+{% block content %}
+<div class="bg-white dark:bg-gray-800 shadow-lg rounded-lg overflow-hidden">
+    <div class="p-6">
+        <div class="flex flex-col md:flex-row">
+            <!-- Imagen del producto -->
+            <div class="w-full md:w-1/3 mb-6 md:mb-0">
+                {% if product.image %}
+                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full h-auto object-cover rounded-lg">
+                {% else %}
+                <div class="bg-gray-200 dark:bg-gray-700 w-full h-64 flex items-center justify-center rounded-lg">
+                    <svg class="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                </div>
+                {% endif %}
+            </div>
+            
+            <!-- Detalles del producto -->
+            <div class="w-full md:w-2/3 md:pl-8">
+                <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">{{ product.name }}</h1>
+                
+                <div class="flex items-center mb-4">
+                    <span class="text-2xl font-bold text-green-600 dark:text-green-400">${{ product.price }}</span>
+                    <span class="ml-2 px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-300 text-xs rounded-full">
+                        {{ product.category.name }}
+                    </span>
+                </div>
+                
+                <div class="mb-6">
+                    <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Descripción</h2>
+                    <p class="text-gray-700 dark:text-gray-300">{{ product.description }}</p>
+                </div>
+                
+                <div class="mb-6">
+                    <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Detalles</h2>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">Stock</p>
+                            <p class="font-medium text-gray-900 dark:text-white">{{ product.stock }} unidades</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">Proveedor</p>
+                            <p class="font-medium text-gray-900 dark:text-white">{{ product.supplier.name }}</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex space-x-4">
+                    <a href="{% url 'producto:product_update' product.id %}" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                        Editar
+                    </a>
+                    <a href="#" onclick="confirmDelete({{ product.id }})" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors">
+                        Eliminar
+                    </a>
+                    <a href="{% url 'producto:product_list' %}" class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors">
+                        Volver
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Sección para mostrar el último producto visto -->
+<div id="last-viewed-product" class="mt-8 bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 hidden">
+    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Último producto visto</h2>
+    <div id="last-product-info" class="flex items-center">
+        <!-- La información del último producto se insertará aquí mediante JavaScript -->
+    </div>
+</div>
+
+<script>
+    // Función para confirmar eliminación
+    function confirmDelete(productId) {
+        if (confirm('¿Estás seguro de que deseas eliminar este producto?')) {
+            window.location.href = `/producto/delete/${productId}/`;
+        }
+    }
+    
+    // Guardar el producto actual en localStorage
+    document.addEventListener('DOMContentLoaded', function() {
+        // Datos del producto actual
+        const currentProduct = {
+            id: {{ product.id }},
+            name: "{{ product.name }}",
+            price: {{ product.price }}
+            {% if product.image %}
+            ,image: "{{ product.image.url }}"
+            {% endif %}
+        };
+        
+        // Guardar en localStorage
+        UserPreferences.setLastViewedProduct(currentProduct);
+        
+        // Obtener y mostrar el último producto visto (que no sea el actual)
+        const lastProduct = UserPreferences.getLastViewedProduct();
+        
+        if (lastProduct && lastProduct.id !== currentProduct.id) {
+            // Mostrar la sección de último producto visto
+            document.getElementById('last-viewed-product').classList.remove('hidden');
+            
+            // Crear el contenido
+            const lastProductInfo = document.getElementById('last-product-info');
+            lastProductInfo.innerHTML = `
+                <div class="flex items-center">
+                    <div class="w-16 h-16 bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center mr-4">
+                        ${lastProduct.image ? 
+                            `<img src="${lastProduct.image}" alt="${lastProduct.name}" class="w-full h-full object-cover rounded-lg">` : 
+                            `<svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>`
+                        }
+                    </div>
+                    <div>
+                        <h3 class="font-medium text-gray-900 dark:text-white">${lastProduct.name}</h3>
+                        <p class="text-sm text-green-600 dark:text-green-400">$${lastProduct.price}</p>
+                        <a href="/producto/detail/${lastProduct.id}/" class="text-sm text-blue-600 hover:underline">Ver detalles</a>
+                    </div>
+                </div>
+            `;
+        }
+    });
+</script>
+{% endblock %} 

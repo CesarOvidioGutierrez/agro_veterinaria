@@ -21,12 +21,19 @@
                 }
             });
         });
+
+        // Inicializar preferencias de usuario
+        if (typeof UserPreferences !== 'undefined') {
+            UserPreferences.initialize();
+        }
     });
 </script>
 
+<!-- LocalStorage scripts -->
+<script src="{% static 'js/localStorage.js' %}"></script>
+<script src="{% static 'js/userPreferences.js' %}"></script>
 
 {% block extra_scripts %}
     <script src="{% static 'flowbite/dist/flowbite.min.js' %}"></script>
     <script src="https://unpkg.com/@flowbite/icons"></script>
-
 {% endblock %} 
