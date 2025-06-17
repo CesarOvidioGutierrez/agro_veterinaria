@@ -1,0 +1,48 @@
+<div class="relative inline-block text-left">
+  <div>
+    <button type="button" class="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-4 py-2 text-sm font-medium text-gray-800 shadow-sm hover:bg-gray-50 ring-1 ring-inset ring-gray-300" id="menu-button" aria-expanded="true" aria-haspopup="true" onclick="document.getElementById('categorias-dropdown').classList.toggle('hidden')">
+      {% if current_category %}
+        {{ current_category.name }}
+      {% else %}
+        Todas las categorías
+      {% endif %}
+      <svg class="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+      </svg>
+    </button>
+  </div>
+
+  <div id="categorias-dropdown" class="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none hidden" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+    <div class="py-1" role="none">
+      <a href="{% url 'producto:product_list' %}" 
+         class="block px-4 py-2 text-sm {% if not categoria_actual %}text-green-700 font-medium bg-green-50{% else %}text-gray-700 hover:bg-gray-50{% endif %}" 
+         role="menuitem" tabindex="-1">
+        Todas las categorías
+      </a>
+      
+      {% for categoria in categorias %}
+        <a href="{% url 'producto:product_list' %}?categoria={{ categoria.id }}" 
+           class="block px-4 py-2 text-sm {% if categoria_actual == categoria.id|stringformat:'s' %}text-green-700 font-medium bg-green-50{% else %}text-gray-700 hover:bg-gray-50{% endif %}" 
+           role="menuitem" tabindex="-1">
+          {{ categoria.name }}
+        </a>
+      {% empty %}
+        <span class="block px-4 py-2 text-sm text-gray-500 italic">
+          No hay categorías disponibles
+        </span>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<script>
+  // Cerrar el dropdown cuando se hace clic fuera de él
+  document.addEventListener('click', function(event) {
+    const dropdown = document.getElementById('categorias-dropdown');
+    const button = document.getElementById('menu-button');
+    
+    if (!button.contains(event.target) && !dropdown.contains(event.target)) {
+      dropdown.classList.add('hidden');
+    }
+  });
+</script> 

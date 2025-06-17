@@ -1,4 +1,5 @@
 {% load static %}
+{% load utils_tags %}
 <header class="animate-fade-in">
     <nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
         <div class="px-3 py-3 lg:px-5 lg:pl-3">
@@ -10,12 +11,25 @@
                      <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
                   </svg>
                </button>
-              <a class="flex ms-2 md:me-24">
+              <a href="{% url 'veterinaria:home' %}" class="flex ms-2 md:me-24">
                 <img src="{% static 'images/logo.png' %}" class="h-8 me-3" alt="Agro Veterinaria Logo" />
                 <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Agro Veterinaria</span>
               </a>
             </div>
+
+            <!-- Breadcrumbs - centrado en la barra de navegación -->
+            <div class="hidden md:flex items-center justify-center flex-1">
+              {% with items=breadcrumbs_items %}
+                {% breadcrumbs items %}
+              {% endwith %}
+            </div>
+            
             <div class="flex items-center">
+                <!-- Botón de modo oscuro -->
+                <div class="mr-4">
+                    {% include "components/dark_mode_toggle.html" %}
+                </div>
+                
                 <div class="flex items-center ms-3">
                   <div>
                     <button type="button" class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" aria-expanded="false" data-dropdown-toggle="dropdown-user">
@@ -53,7 +67,14 @@
         </div>
       </nav>
       
-      <aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700" aria-label="Sidebar">
+      <!-- Breadcrumbs para móviles - debajo de la barra de navegación -->
+      <div class="fixed top-14 left-0 z-30 w-full px-4 py-2 bg-gray-50 border-b border-gray-200 md:hidden sm:px-6 dark:bg-gray-700 dark:border-gray-600">
+        {% with items=breadcrumbs_items %}
+          {% breadcrumbs items %}
+        {% endwith %}
+      </div>
+      
+      <aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen pt-16 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700" aria-label="Sidebar">
          <div class="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
             <ul class="space-y-2 font-medium">
                 <li>
@@ -68,13 +89,20 @@
                     </button>
                     <ul id="dropdown-example" class="hidden py-2 space-y-2">
                         <li>
-                            <a href="#" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Cargar</a>
+                            <a href="{% url 'producto:product_create' %}" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                                </svg>
+                                Crear
+                            </a>
                         </li>
                         <li>
-                            <a href="#" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Eliminar</a>
-                        </li>
-                        <li>
-                            <a href="#" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Productos</a>
+                            <a href="{% url 'producto:product_list' %}" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/>
+                                </svg>
+                                Listar
+                            </a>
                         </li>
                     </ul>
                 </li>
@@ -89,4 +117,10 @@
             </ul>
         </div>
       </aside>      
-</header> 
+</header>
+
+<script>
+  // Definir valores predeterminados para breadcrumbs
+  var default_items = [{'title': 'Inicio', 'url': '/'}];
+  var default_breadcrumbs_items = default_items;
+</script> 

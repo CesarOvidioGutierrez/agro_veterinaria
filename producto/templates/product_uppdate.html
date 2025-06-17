@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+
+{% block content %}
+<div class="container mx-auto px-4 w-full min-h-[calc(100vh-350px)]">
+    <h1 class="text-2xl font-bold mb-6">Editar Producto</h1>
+    <div class="w-full overflow-hidden shadow-md sm:rounded-lg bg-white dark:bg-gray-800 p-6">
+        <form method="post" enctype="multipart/form-data" class="max-w-4xl mx-auto">
+            {% csrf_token %}
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="mb-6">
+                    <label for="{{ form.name.id_for_label }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.name.label }}</label>
+                    {% render_field form.name class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Nombre del producto" %}
+                    {% if form.name.errors %}
+                    <p class="mt-2 text-sm text-red-600">{{ form.name.errors }}</p>
+                    {% endif %}
+                </div>
+
+                <div class="mb-6">
+                    <label for="{{ form.price.id_for_label }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.price.label }}</label>
+                    {% render_field form.price class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="0.00" %}
+                    {% if form.price.errors %}
+                    <p class="mt-2 text-sm text-red-600">{{ form.price.errors }}</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <label for="{{ form.description.id_for_label }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.description.label }}</label>
+                {% render_field form.description class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" rows="4" placeholder="Descripción detallada del producto..." %}
+                {% if form.description.errors %}
+                <p class="mt-2 text-sm text-red-600">{{ form.description.errors }}</p>
+                {% endif %}
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="mb-6">
+                    <label for="{{ form.stock.id_for_label }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.stock.label }}</label>
+                    {% render_field form.stock class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="0" %}
+                    {% if form.stock.errors %}
+                    <p class="mt-2 text-sm text-red-600">{{ form.stock.errors }}</p>
+                    {% endif %}
+                </div>
+
+                <div class="mb-6">
+                    <label for="{{ form.category.id_for_label }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.category.label }}</label>
+                    {% render_field form.category class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" %}
+                    {% if form.category.errors %}
+                    <p class="mt-2 text-sm text-red-600">{{ form.category.errors }}</p>
+                    {% endif %}
+                </div>
+
+                <div class="mb-6">
+                    <label for="{{ form.supplier.id_for_label }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.supplier.label }}</label>
+                    {% render_field form.supplier class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" %}
+                    {% if form.supplier.errors %}
+                    <p class="mt-2 text-sm text-red-600">{{ form.supplier.errors }}</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <label for="{{ form.image.id_for_label }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.image.label }}</label>
+                {% if product.image %}
+                <div class="mb-4">
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Imagen actual:</p>
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="h-32 w-auto object-contain border border-gray-200 rounded">
+                </div>
+                {% endif %}
+                <div class="flex items-center justify-center w-full">
+                    <label for="{{ form.image.id_for_label }}" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                        <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                            <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+                            </svg>
+                            <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click para cambiar</span> o arrastrar y soltar</p>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG o GIF (MAX. 800x400px)</p>
+                        </div>
+                        {{ form.image|add_class:"hidden" }}
+                    </label>
+                </div>
+                <p class="mt-2 text-xs text-gray-500 dark:text-gray-400">Deja en blanco para mantener la imagen actual</p>
+                {% if form.image.errors %}
+                <p class="mt-2 text-sm text-red-600">{{ form.image.errors }}</p>
+                {% endif %}
+            </div>
+
+            <div class="flex items-center justify-between mt-8">
+                <a href="{% url 'producto:product_list' %}" class="py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+                    Cancelar
+                </a>
+                <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                    <svg class="w-4 h-4 mr-2 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
+                    </svg>
+                    Guardar cambios
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,4 +1,7 @@
 {% extends 'base.html' %}
+{% load utils_tags %}
+{% load categoria_tags %}
+{% load producto_ofertas %}
 
 {% block title %}{{ title }}{% endblock %}
 
@@ -8,7 +11,10 @@
     <p class="text-lg text-gray-600 mb-6">Tu tienda especializada en productos veterinarios y agrícolas</p>
     <hr class="my-6 border-gray-200">
     <p class="mb-6">Ofrecemos los mejores productos y servicios para el cuidado de tus animales y cultivos.</p>
-    <a href="#" class="btn-primary">Ver productos</a>
+    <div class="flex items-center justify-between">
+        <a href="{% url 'producto:product_list' %}" class="btn-primary">Ver productos</a>
+        <p class="text-sm text-gray-500">Fecha: {% fecha_actual %}</p>
+    </div>
 </div>
 
 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10">
@@ -16,14 +22,14 @@
         <div class="feature-body">
             <h2 class="feature-title">Productos Veterinarios</h2>
             <p class="feature-text">Medicamentos, alimentos y accesorios para mascotas y animales de granja.</p>
-            <a href="#" class="btn-outline">Ver más</a>
+            <a href="{% url 'producto:product_list' %}" class="btn-outline">Ver más</a>
         </div>
     </div>
     <div class="feature-card">
         <div class="feature-body">
             <h2 class="feature-title">Productos Agrícolas</h2>
             <p class="feature-text">Semillas, fertilizantes, herbicidas y herramientas para tu campo.</p>
-            <a href="#" class="btn-outline">Ver más</a>
+            <a href="{% url 'producto:product_list' %}" class="btn-outline">Ver más</a>
         </div>
     </div>
     <div class="feature-card">
@@ -35,7 +41,17 @@
     </div>
 </div>
 
-<div class="section">
+<!-- Sección de ofertas especiales -->
+<div class="mt-10">
+    {% mostrar_ofertas 3 %}
+</div>
+
+<!-- Categorías destacadas -->
+<div class="mt-10">
+    {% mostrar_categorias %}
+</div>
+
+<div class="section mt-10">
     <h2 class="text-center mb-8">¿Por qué elegir Agro Veterinaria?</h2>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-center">
         <div class="p-4">

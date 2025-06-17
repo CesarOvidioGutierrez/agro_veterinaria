@@ -1,0 +1,23 @@
+<div class="bg-white rounded-lg shadow overflow-hidden">
+    <div class="px-4 py-5 sm:px-6 bg-green-700 text-white">
+        <h3 class="text-lg leading-6 font-medium">Categorías de productos</h3>
+    </div>
+    <div class="border-t border-gray-200">
+        <ul role="list" class="divide-y divide-gray-200">
+            {% for categoria in categorias %}
+            <li class="px-4 py-4 hover:bg-gray-50">
+                <a href="{% url 'producto:product_list' %}?categoria={{ categoria.id }}" class="flex justify-between items-center">
+                    <span class="text-gray-900 font-medium">{{ categoria.name }}</span>
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                        {{ categoria.num_productos }}
+                    </span>
+                </a>
+            </li>
+            {% empty %}
+            <li class="px-4 py-4">
+                <p class="text-gray-500 italic">No hay categorías disponibles</p>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div> 

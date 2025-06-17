@@ -1,0 +1,12 @@
+<a href="{{ href }}" class="btn-secondary">
+    {% if icon %}
+    <svg class="w-4 h-4 mr-2" fill="{{ icon_fill|default:'currentColor' }}" {% if icon_stroke %}stroke="{{ icon_stroke }}"{% endif %} viewBox="0 0 {{ icon_viewbox|default:'20 20' }}" xmlns="http://www.w3.org/2000/svg">
+        {% if icon_path_rule %}
+        <path fill-rule="evenodd" d="{{ icon_path }}" clip-rule="evenodd"></path>
+        {% else %}
+        <path {% if icon_stroke %}stroke-linecap="round" stroke-linejoin="round" stroke-width="2"{% endif %} d="{{ icon_path }}"></path>
+        {% endif %}
+    </svg>
+    {% endif %}
+    {{ text }}
+</a> 

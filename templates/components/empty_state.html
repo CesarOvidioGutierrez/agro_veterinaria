@@ -1,0 +1,19 @@
+<div class="w-full bg-white dark:bg-gray-800 p-6 flex items-center justify-center min-h-[400px]">
+    <div class="text-center">
+        <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+        </svg>
+        <h3 class="mt-2 text-lg font-medium text-gray-900 dark:text-white">{{ title|default:"No hay datos disponibles" }}</h3>
+        <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ message|default:"No se han encontrado registros." }}</p>
+        {% if action_url %}
+        <div class="mt-6">
+            <a href="{{ action_url }}" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700">
+                <svg class="-ml-1 mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
+                </svg>
+                {{ action_text|default:"Agregar" }}
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</div> 

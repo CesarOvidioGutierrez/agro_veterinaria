@@ -44,7 +44,9 @@ INSTALLED_APPS = [
     'tailwind',
     'theme',  # App para Tailwind
     'veterinaria',
+    'producto',
     'compressor',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
@@ -165,3 +167,38 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'theme/static'),
     os.path.join(BASE_DIR, 'node_modules'),
 ]
+
+# Configuración de Logging
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose',
+        },
+    },
+    'loggers': {
+        'producto': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+        'django': {
+            'handlers': ['console'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'INFO',
+    },
+}
