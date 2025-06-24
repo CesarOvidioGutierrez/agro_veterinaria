@@ -12,7 +12,7 @@ class ProductListView(ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        queryset = super().get_queryset()
+        queryset = super().get_queryset().order_by('id')
         
         # Filtrar por categoría si se proporciona en la URL
         categoria_id = self.request.GET.get('categoria')
