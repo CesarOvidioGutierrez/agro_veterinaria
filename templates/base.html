@@ -15,16 +15,14 @@
 
     {% tailwind_css %} {# Tailwind generado por django-tailwind #}
 
-    {% block extra_css %}
-    
-    <!-- Flowbite CSS -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
-    {% endblock %}
+    {% compress css %}
+    <link rel="stylesheet" href="{% static 'css/output.css' %}">
+    {% endcompress %}
+
+    {% block extra_css %}{% endblock %}
     {% block extra_head %}{% endblock %}
-
-
 </head>
-<body class="{% block body_class %}bg-gray-50 flex flex-col min-h-screen h-full{% endblock %}">
+<body class="{% block body_class %}bg-gray-50 flex flex-col min-h-screen h-full dark:bg-gray-900 dark:text-white{% endblock %}">
 
     {% block header %}
         {% include "components/header.html" %}

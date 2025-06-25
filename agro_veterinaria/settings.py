@@ -88,7 +88,7 @@ COMPRESS_ENABLED = True
 # Opcionalmente, también podrías decirle dónde guardar los archivos comprimidos:
 COMPRESS_OUTPUT_DIR = 'CACHE'
 
-# Y si querés, podés usar también esto para DEBUG=True en local:
+# Para desarrollo local
 COMPRESS_OFFLINE = True
 
 
@@ -104,7 +104,7 @@ DATABASES = {
         'NAME': os.getenv('POSTGRES_DB', 'postgres'),
         'USER': os.getenv('POSTGRES_USER', 'postgres'),
         'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'postgres'),
-        'HOST': os.getenv('POSTGRES_HOST', 'localhost'),
+        'HOST': os.getenv('POSTGRES_HOST', 'db'),
         'PORT': os.getenv('POSTGRES_PORT', '5432'),
     }
 }
@@ -145,7 +145,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'static'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# Directorios adicionales donde buscar archivos estáticos
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+    BASE_DIR / 'node_modules',
+]
 
 # Media files
 MEDIA_URL = '/media/'
@@ -161,11 +167,6 @@ TAILWIND_APP_NAME = 'theme'
 # Configuración de Tailwind en modo desarrollo
 INTERNAL_IPS = [
     "127.0.0.1",
-]
-
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'theme/static'),
-    os.path.join(BASE_DIR, 'node_modules'),
 ]
 
 # Configuración de Logging

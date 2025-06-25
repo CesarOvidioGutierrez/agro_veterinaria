@@ -1,0 +1,6 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Importar el tema por defecto de Flowbite */
+@import "flowbite/dist/flowbite.min.css"; 

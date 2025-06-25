@@ -1,4 +1,5 @@
 {% load static %}
+{% load compress %}
 <script>
     // Mobile menu toggle
     document.addEventListener('DOMContentLoaded', function() {
@@ -30,10 +31,12 @@
 </script>
 
 <!-- LocalStorage scripts -->
+{% compress js %}
 <script src="{% static 'js/localStorage.js' %}"></script>
 <script src="{% static 'js/userPreferences.js' %}"></script>
+{% endcompress %}
 
-{% block extra_scripts %}
-    <script src="{% static 'flowbite/dist/flowbite.min.js' %}"></script>
-    <script src="https://unpkg.com/@flowbite/icons"></script>
-{% endblock %} 
+<!-- Flowbite JS -->
+<script src="{% static 'flowbite/dist/flowbite.min.js' %}"></script>
+
+{% block extra_scripts %}{% endblock %} 

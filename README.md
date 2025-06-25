@@ -177,3 +177,89 @@ El proyecto utiliza un entorno virtual Python dentro del contenedor Docker para 
 
 - Asegúrate de que los archivos `requirements.txt`, `nginx.conf` y `docker-entrypoint.sh` estén en el directorio raíz del proyecto.
 - Modifica las configuraciones según sea necesario para tu entorno de desarrollo.
+
+## Configuración de Flowbite con Django y Tailwind CSS
+
+### Configuración de Tailwind CSS y Flowbite
+
+Para integrar Tailwind CSS y Flowbite en el proyecto:
+
+1. **Instalar dependencias**:
+   ```sh
+   docker compose exec web pip install django-tailwind flowbite
+   ```
+
+2. **Configurar Tailwind con modo oscuro**:
+   - Editar el archivo `tailwind.config.js` para habilitar el modo oscuro:
+   ```js
+   module.exports = {
+     darkMode: 'class',
+     // resto de la configuración...
+   }
+   ```
+
+3. **Configuración de archivos estáticos**:
+   - Asegurarse que en `settings.py` la configuración de archivos estáticos apunte al directorio correcto:
+   ```python
+   STATIC_URL = '/static/'
+   STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+   ```
+
+### Configuración del Modo Oscuro
+
+Para implementar el modo oscuro en la aplicación:
+
+1. **Agregar script de preferencias de usuario**:
+   - Crear un archivo JavaScript para manejar las preferencias del modo oscuro
+   - Implementar la lógica para cambiar entre modo claro y oscuro
+   - Guardar la preferencia en localStorage
+
+2. **Modificar las plantillas HTML**:
+   - Agregar las clases `dark:` correspondientes a los elementos HTML
+   - Incluir un botón para cambiar entre modos
+
+### Conexión a la Base de Datos
+
+Para la configuración correcta de la base de datos en Docker:
+
+1. **Configuración en settings.py**:
+   - Usar 'db' como nombre de host en lugar de 'localhost':
+   ```python
+   DATABASES = {
+       'default': {
+           'ENGINE': 'django.db.backends.postgresql',
+           'NAME': 'postgres',
+           'USER': 'postgres',
+           'PASSWORD': 'postgres',
+           'HOST': 'db',  # Nombre del servicio en docker-compose
+           'PORT': '5432',
+       }
+   }
+   ```
+
+### Configuración Inicial del Proyecto
+
+Para iniciar el proyecto desde cero:
+
+1. **Eliminar todos los contenedores e imágenes existentes**:
+   ```sh
+   docker compose down -v
+   docker system prune -a
+   ```
+
+2. **Levantar el proyecto**:
+   ```sh
+   docker compose build
+   docker compose up -d
+   ```
+
+3. **Crear superusuario administrador**:
+   ```sh
+   docker compose exec web python manage.py createsuperuser
+   # Usuario: admin
+   # Contraseña: pass
+   ```
+
+4. **Crear datos iniciales**:
+   - Categoría inicial: "Medicamentos"
+   - Proveedor inicial: "Distribuidora Veterinaria"

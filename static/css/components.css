@@ -1,0 +1,58 @@
+@layer components {
+  /* Formularios */
+  .form-input {
+    @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500;
+  }
+  
+  .form-label {
+    @apply block mb-2 text-sm font-medium text-gray-900 dark:text-white;
+  }
+  
+  .form-error {
+    @apply mt-2 text-sm text-red-600 dark:text-red-400;
+  }
+  
+  .form-group {
+    @apply mb-6;
+  }
+
+  /* Botones */
+  .btn-primary {
+    @apply text-white bg-vet-blue-600 hover:bg-vet-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-vet-blue-700 dark:hover:bg-vet-blue-800 focus:outline-none dark:focus:ring-blue-800 inline-flex items-center;
+  }
+  
+  .btn-secondary {
+    @apply py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-vet-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700;
+  }
+
+  /* Tarjetas y contenedores */
+  .card {
+    @apply w-full overflow-hidden shadow-md sm:rounded-lg bg-white dark:bg-gray-800 p-6;
+  }
+
+  .section-title {
+    @apply text-2xl font-bold mb-6 text-vet-blue-800 dark:text-white;
+  }
+
+  /* Animaciones */
+  .animate-fade {
+    @apply animate-fade-in;
+  }
+
+  .animate-slide {
+    @apply animate-slide-in;
+  }
+
+  /* Elementos de tabla */
+  .table-header {
+    @apply px-6 py-3 text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400;
+  }
+
+  .table-cell {
+    @apply px-6 py-4;
+  }
+
+  .table-row {
+    @apply bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600;
+  }
+} 

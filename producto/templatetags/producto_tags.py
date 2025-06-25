@@ -30,11 +30,11 @@ def estado_stock(value):
     try:
         stock = int(value)
         if stock <= 0:
-            return mark_safe('<span class="px-2 py-1 text-xs font-medium text-white bg-red-500 rounded-full">Sin stock</span>')
+            return mark_safe('<span class="px-2 py-1 text-xs font-medium text-white bg-red-500 dark:bg-red-600 rounded-full">Sin stock</span>')
         elif stock <= 10:
-            return mark_safe(f'<span class="px-2 py-1 text-xs font-medium text-yellow-800 bg-yellow-200 rounded-full">Bajo ({stock})</span>')
+            return mark_safe(f'<span class="px-2 py-1 text-xs font-medium text-yellow-800 bg-yellow-200 dark:text-yellow-200 dark:bg-yellow-800 rounded-full">Bajo ({stock})</span>')
         else:
-            return mark_safe(f'<span class="px-2 py-1 text-xs font-medium text-green-800 bg-green-200 rounded-full">Disponible ({stock})</span>')
+            return mark_safe(f'<span class="px-2 py-1 text-xs font-medium text-green-800 bg-green-200 dark:text-green-200 dark:bg-green-800 rounded-full">Disponible ({stock})</span>')
     except:
         return value
 

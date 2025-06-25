@@ -9,13 +9,29 @@
 </button>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    // Asegurarse de que el script se ejecute después de que UserPreferences esté disponible
+    function initDarkModeToggle() {
+        console.log('Inicializando dark mode toggle');
+        
+        if (typeof UserPreferences === 'undefined') {
+            console.error('UserPreferences no está definido');
+            // Intentar nuevamente en 100ms
+            setTimeout(initDarkModeToggle, 100);
+            return;
+        }
+        
         const themeToggleBtn = document.getElementById('theme-toggle');
         const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
         const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+        
+        if (!themeToggleBtn || !themeToggleDarkIcon || !themeToggleLightIcon) {
+            console.error('No se encontraron los elementos del tema');
+            return;
+        }
 
         // Mostrar el icono correcto según el modo actual
         function updateIcons() {
+            console.log('Actualizando iconos. Modo oscuro:', UserPreferences.getDarkMode());
             if (UserPreferences.getDarkMode()) {
                 themeToggleLightIcon.classList.remove('hidden');
                 themeToggleDarkIcon.classList.add('hidden');
@@ -30,8 +46,16 @@
 
         // Alternar tema al hacer clic
         themeToggleBtn.addEventListener('click', function() {
+            console.log('Botón de tema clickeado');
             UserPreferences.toggleDarkMode();
             updateIcons();
         });
-    });
+    }
+
+    // Iniciar cuando el DOM esté listo
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initDarkModeToggle);
+    } else {
+        initDarkModeToggle();
+    }
 </script> 
